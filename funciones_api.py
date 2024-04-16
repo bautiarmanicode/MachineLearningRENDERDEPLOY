@@ -74,7 +74,6 @@ def intro():
 # ________________________________________________________
 
 
-# DEVELOPER
 def developer(desarrollador: str):
     df_dev = df_API_developer[df_API_developer['developer'] == desarrollador]
 
