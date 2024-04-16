@@ -78,7 +78,7 @@ def developer(desarrollador: str):
     df_dev = df_API_developer[df_API_developer['developer'] == desarrollador]
 
     grouped = df_dev.groupby('release_year').agg(
-        items=('id', 'count'),  # Cambiar de (x == 0).sum() a 'count' o 'sum'
+        items=('user_id', 'count'),  # Cambiar de (x == 0).sum() a 'count' o 'sum'
         gratis=('price', lambda x: (x == 0).sum())
     )
 
