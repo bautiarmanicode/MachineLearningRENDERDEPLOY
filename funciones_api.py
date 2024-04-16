@@ -84,16 +84,19 @@ def developer(desarrollador: str):
 
     result = []
     for year, row in grouped.iterrows():
+        juegos = int(row["items"])
+        gratis_percent = round(row["gratis"] / juegos * 100, 2) if juegos > 0 else 0
         result.append({
             "Año": int(year),
-            "Juegos": int(row["items"]),
-            "Gratis %": row["gratis"] / row["items"] * 100
+            "Juegos": juegos,
+            "Gratis %": gratis_percent
         })
     
     # Llamamos al recolector de basura
     gc.collect()
 
     return result
+
 # ________________________________________________________
 # 
 
