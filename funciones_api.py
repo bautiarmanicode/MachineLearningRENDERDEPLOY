@@ -126,8 +126,8 @@ def userdata(user_id: str):
         'cantidad de items': total_reviews
     }
 
-    # Devolver el diccionario como JSON
-    return result
+    # Devolver el diccionario como parte de una lista
+    return [result]
 
 
 
