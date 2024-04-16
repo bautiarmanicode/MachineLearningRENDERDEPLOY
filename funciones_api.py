@@ -118,12 +118,16 @@ def userdata(user_id: str):
     num_recommendations = (user_reviews['sentiment_analysis'] == True).sum()
     recommendation_percentage = (num_recommendations / total_reviews) * 100 if total_reviews > 0 else 0
 
-    return {
+    # Crear el diccionario de salida
+    result = {
         'Usuario': user_id,
         'Dinero gastado': f"{spent_money} USD",
         '% de recomendación': f"{recommendation_percentage}%",
         'cantidad de items': total_reviews
     }
+
+    # Devolver el diccionario como JSON
+    return result
 
 
 
