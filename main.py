@@ -46,3 +46,20 @@ tags=["Consultas Generales"])
 def developer(desarrollador: str):    
     resultadodesarrollador = fa.developer(desarrollador)
     return resultadodesarrollador
+
+
+@app.get("/userdata/{user_id}",response_model=List,  
+            description="""
+    <font color="blue">
+        INSTRUCCIONES<br>
+        1. Haga clic en "Try it out".<br>
+        2. Ingrese el X en el cuadro de abajo.<br>
+        3. Desplácese hacia "Resposes" para ver x que tiene el mismo.<br>
+        4_ Ejemplos de desarrolladores para consultar: Valve, Capcom
+    </font>
+""", 
+tags=["Consultas Generales"])
+
+def userdata(user_id: str):    
+    user = fa.userdata(user_id)
+    return user

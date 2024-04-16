@@ -9,8 +9,11 @@ import gc
 
 #developer
 df_API_developer = pd.read_parquet("./0 Dataset/df_API_developer.parquet")
+
 #userdata
-#df_userdata = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
+df_user_reviews = pd.read_parquet("./0 Dataset/user_review_LISTO.parquet")                    
+df_steam_games = pd.read_parquet("./0 Dataset/steam_games_LISTO.parquet")     
+
 #UserForGenre
 #df_UserForGenre = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
 # best_developer_year
@@ -99,10 +102,28 @@ def developer(desarrollador: str):
 
 # ________________________________________________________
 # 
+def userdata(user_id: str):
+    # Filtrar las revisiones del usuario
+    user_reviews = df_user_reviews[df_user_reviews['user_id'] == user_id]
 
-#.to_dict(orient="records")
+    # Calcular el dinero gastado por el usuario
+    spent_money = 0
+    for item_id in user_reviews['reviews_item_id']:
+        price = df_steam_games[df_steam_games['user_id'] == item_id]['price'].values
+        if len(price) > 0:  # Verificar si se encontró el precio del ítem
+            spent_money += price[0]
 
+    # Calcular el porcentaje de recomendación
+    total_reviews = len(user_reviews)
+    num_recommendations = (user_reviews['sentiment_analysis'] == True).sum()
+    recommendation_percentage = (num_recommendations / total_reviews) * 100 if total_reviews > 0 else 0
 
+    return {
+        'Usuario': user_id,
+        'Dinero gastado': f"{spent_money} USD",
+        '% de recomendación': f"{recommendation_percentage}%",
+        'cantidad de items': total_reviews
+    }
 
 
 
