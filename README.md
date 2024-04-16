@@ -1,6 +1,5 @@
-Deployment render
+## Deployment render
 
+Este repositorio se usa para el **deploy** en la plataforma **Render** para este proyecto:
 
-Este repositorio se usa para el deploy en la plataforma Render para el proyecto  *"xx"* .
-
-Los detalles de este proyecto se encuentran en este (LINK)
+###  *[MachineLearningOperations-SteamGames](https://github.com/bautiarmanicode/MachineLearning)*
