@@ -10,13 +10,13 @@ import gc
 #developer
 df_API_developer = pd.read_parquet("./0 Dataset/df_API_developer.parquet")
 #userdata
-df_userdata = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
+#df_userdata = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
 #UserForGenre
-df_UserForGenre = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
+#df_UserForGenre = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
 # best_developer_year
-df_best_developer_year = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
+#df_best_developer_year = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
 #developer_reviews_analysis
-funcion5 = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
+#funcion5 = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
 
 
 # ________________________________________________________
