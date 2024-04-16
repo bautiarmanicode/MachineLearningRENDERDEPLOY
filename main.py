@@ -37,7 +37,7 @@ def intro():
         INSTRUCCIONES<br>
         1. Haga clic en "Try it out".<br>
         2. Ingrese el X en el cuadro de abajo.<br>
-        3. Desplácese hacia "Resposes" para ver x que tiene el mismo.<br>
+        3. Desplácese hacia "Resposes" para ver `Cantidad` de items y `porcentaje` de contenido Free por año según empresa desarrolladora.<br>
         4_ Ejemplos de desarrolladores para consultar: Valve, Capcom
     </font>
 """, 
@@ -53,9 +53,9 @@ def developer(desarrollador: str):
     <font color="blue">
         INSTRUCCIONES<br>
         1. Haga clic en "Try it out".<br>
-        2. Ingrese el X en el cuadro de abajo.<br>
-        3. Desplácese hacia "Resposes" para ver x que tiene el mismo.<br>
-        4_ Ejemplos de desarrolladores para consultar: Valve, Capcom
+        2. Ingrese el user_id en el cuadro de abajo.<br>
+        3. Desplácese hacia "Resposes" para ver `cantidad` de dinero gastado por el usuario, el `porcentaje` de recomendación en base a reviews.recommend y `cantidad de juegos.<br>
+        4_ Ejemplos de desarrolladores para consultar: evcentric, 76561198099295859
     </font>
 """, 
 tags=["Consultas Generales"])
