@@ -8,11 +8,11 @@ import gc
 #Asigmanos el parquet a distintos df con los que vamos a trabajar
 
 #developer
-df_API_developer = pd.read_parquet("./0 Dataset/df_API_developer.parquet")
+df_API_developer = pd.read_parquet("./0 Dataset/2.2_df_API_developer.parquet")
 
 #userdata
-df_user_reviews = pd.read_parquet("./0 Dataset/user_review_LISTO.parquet")                    
-df_steam_games = pd.read_parquet("./0 Dataset/steam_games_LISTO.parquet")     
+df_user_reviews = pd.read_parquet("./0 Dataset/1.2_user_review_LISTO.parquet")                    
+df_steam_games = pd.read_parquet("./0 Dataset/1.1_steam_games_LISTO.parquet")     
 
 #UserForGenre
 #df_UserForGenre = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
@@ -115,7 +115,7 @@ def userdata(user_id: str):
 
     # Calcular el porcentaje de recomendación
     total_reviews = len(user_reviews)
-    num_recommendations = (user_reviews['sentiment_analysis'] == True).sum()
+    num_recommendations = (df_user_reviews['sentiment_analysis'] == True).sum()
     recommendation_percentage = (num_recommendations / total_reviews) * 100 if total_reviews > 0 else 0
 
     # Crear el diccionario de salida

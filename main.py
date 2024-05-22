@@ -29,8 +29,7 @@ def intro():
 
 
 # Desarrollador
-#
-#
+
 @app.get("/developer/{desarrollador}",response_model=List,  
             description="""
     <font color="blue">
