@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Query
 from fastapi.responses import HTMLResponse
 import funciones_api as fa
-from funciones_api import developer
 from typing import List
 
 # import ML_itemxitem as ML
@@ -29,20 +28,10 @@ def intro():
 
 
 # Desarrollador
-@app.get("/developer/{desarrollador}",response_model=List,  
-            description="""
-    <font color="blue">
-        INSTRUCCIONES<br>
-        1. Haga clic en "Try it out".<br>
-        2. Ingrese el X en el cuadro de abajo.<br>
-        3. Desplácese hacia "Resposes" para ver `Cantidad` de items y `porcentaje` de contenido Free por año según empresa desarrolladora.<br>
-        4_ Ejemplos de desarrolladores para consultar: Valve, Capcom
-    </font>
-""", 
-tags=["Consultas Generales"])
-def developer(desarrollador: str):
-    result = fa.developer[fa.developer['Desarrollador'] == desarrollador]
-    return result.to_dict(orient='records')
+@app.get("/developer/{desarrollador}", response_model=List, description=""" <font color="blue"> INSTRUCCIONES<br> 1. Haga clic en "Try it out".<br> 2. Ingrese el X en el cuadro de abajo.<br> 3. Desplácese hacia "Resposes" para ver `Cantidad` de items y `porcentaje` de contenido Free por año según empresa desarrolladora.<br> 4\_ Ejemplos de desarrolladores para consultar: Valve, Capcom </font> """, tags=["Consultas Generales"])
+def endpoint_developer(desarrollador: str):
+    result = fa.developer(desarrollador)
+    return result
 
 
 

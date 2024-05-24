@@ -16,8 +16,8 @@ Asignamos el parquet a distintos df con los que vamos a trabajar
 df_API_developer2 = pd.read_parquet("./0 Dataset/2.2.1_API_developer.parquet")
 
 #userdata
-df_user_reviews = pd.read_parquet("./0 Dataset/1.2_user_review_LISTO.parquet")                    
-df_steam_games = pd.read_parquet("./0 Dataset/1.1_steam_games_LISTO.parquet")     
+#df_user_reviews = pd.read_parquet("./0 Dataset/1.2_user_review_LISTO.parquet")                    
+#df_steam_games = pd.read_parquet("./0 Dataset/1.1_steam_games_LISTO.parquet")     
 
 '''
 ________________________________________________________________
