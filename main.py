@@ -47,20 +47,9 @@ def developer(desarrollador: str):
 tags=["Consultas Generales"])
 def userdata(user_id: str):
     # Filtramos el DataFrame user_stats por el user_id
-    result = user_stats[user_stats['user_id'] == user_id]
+    result = fa.userdata(user_id)
+    return result
 
-    # Si hay resultados, devolvemos el primer diccionario
-    if not result.empty:
-        user_data = result.to_dict(orient='records')[0]
-        return {
-            "Usuario": user_data['user_id'],
-            "Dinero gastado": f"{user_data['total_spent']} USD",
-            "% de recomendación": f"{user_data['recommendation_percentage']}%",
-            "cantidad de items": user_data['cantidad_items']
-        }
-    # Si no hay resultados, devolvemos un mensaje de error
-    else:
-        return {"error": f"No se encontraron datos para el usuario {user_id}"}
     
     
 
