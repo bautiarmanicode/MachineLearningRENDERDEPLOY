@@ -1,26 +1,33 @@
-## FUNCIONES A UTILIZAR EN app.py
-
+'''
+FUNCIONES A UTILIZAR EN app.py
+'''
 # Importaciones
 import pandas as pd
 import gc
 
+'''
+________________________________________________________________
+Asignamos el parquet a distintos df con los que vamos a trabajar
+'''
+#developer viejo
+#df_API_developer = pd.read_parquet("./0 Dataset/2.2_df_API_developer.parquet")
 
-#Asigmanos el parquet a distintos df con los que vamos a trabajar
-
-#developer
-df_API_developer = pd.read_parquet("./0 Dataset/2.2_df_API_developer.parquet")
+#1 developer nuevo
+df_API_developer2 = pd.read_parquet("./0 Dataset/2.2.1_API_developer.parquet")
 
 #userdata
 df_user_reviews = pd.read_parquet("./0 Dataset/1.2_user_review_LISTO.parquet")                    
 df_steam_games = pd.read_parquet("./0 Dataset/1.1_steam_games_LISTO.parquet")     
 
+'''
+________________________________________________________________
+'''
 #UserForGenre
 #df_UserForGenre = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
 # best_developer_year
 #df_best_developer_year = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
 #developer_reviews_analysis
 #funcion5 = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
-
 
 # ________________________________________________________
 def intro():
@@ -72,11 +79,13 @@ def intro():
     </html>
     '''
 
-
+def developer(desarrollador: str):
+    result = df_API_developer2[df_API_developer2['Desarrollador'] == desarrollador]
+    return result.to_dict(orient='records')
 
 # ________________________________________________________
 
-
+'''
 def developer(desarrollador: str):
     df_dev = df_API_developer[df_API_developer['developer'] == desarrollador]
 
@@ -99,6 +108,8 @@ def developer(desarrollador: str):
     gc.collect()
 
     return result
+
+'''
 
 # ________________________________________________________
 # 
