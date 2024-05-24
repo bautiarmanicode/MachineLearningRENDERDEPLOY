@@ -29,41 +29,42 @@ def intro():
 
 # Desarrollador
 @app.get("/developer/{desarrollador}", response_model=List, description=""" <font color="blue"> INSTRUCCIONES<br> 1. Haga clic en "Try it out".<br> 2. Ingrese el X en el cuadro de abajo.<br> 3. Desplácese hacia "Resposes" para ver `Cantidad` de items y `porcentaje` de contenido Free por año según empresa desarrolladora.<br> 4\_ Ejemplos de desarrolladores para consultar: Valve, Capcom </font> """, tags=["Consultas Generales"])
-def endpoint_developer(desarrollador: str):
+def developer(desarrollador: str):
     result = fa.developer(desarrollador)
     return result
 
 
-
-'''
-
-@app.get("/developer/{desarrollador}",response_model=List,  
+@app.get("/userdata/{user_id}",,response_model=List,  
             description="""
     <font color="blue">
         INSTRUCCIONES<br>
         1. Haga clic en "Try it out".<br>
-        2. Ingrese el X en el cuadro de abajo.<br>
-        3. Desplácese hacia "Resposes" para ver `Cantidad` de items y `porcentaje` de contenido Free por año según empresa desarrolladora.<br>
-        4_ Ejemplos de desarrolladores para consultar: Valve, Capcom
+        2. Ingrese el user_id en el cuadro de abajo.<br>
+        3. Desplácese hacia "Resposes" para ver `cantidad` de dinero gastado por el usuario, el `porcentaje` de recomendación en base a reviews.recommend y `cantidad de juegos.<br>
+        4_ Ejemplos de desarrolladores para consultar: evcentric, 76561198099295859
     </font>
 """, 
 tags=["Consultas Generales"])
+def userdata(user_id: str):
+    # Filtramos el DataFrame user_stats por el user_id
+    result = user_stats[user_stats['user_id'] == user_id]
 
-def developer(desarrollador: str):    
-    resultadodesarrollador = fa.developer(desarrollador)
-    return resultadodesarrollador
+    # Si hay resultados, devolvemos el primer diccionario
+    if not result.empty:
+        user_data = result.to_dict(orient='records')[0]
+        return {
+            "Usuario": user_data['user_id'],
+            "Dinero gastado": f"{user_data['total_spent']} USD",
+            "% de recomendación": f"{user_data['recommendation_percentage']}%",
+            "cantidad de items": user_data['cantidad_items']
+        }
+    # Si no hay resultados, devolvemos un mensaje de error
+    else:
+        return {"error": f"No se encontraron datos para el usuario {user_id}"}
+    
+    
 
-
-
-
-
-
-
-
-
-
-
-
+'''
 
 
 

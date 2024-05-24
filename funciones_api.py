@@ -10,26 +10,24 @@ ________________________________________________________________
 Asignamos el parquet a distintos df con los que vamos a trabajar
 '''
 #1 developer
-df_API_developer2 = pd.read_parquet("./0 Dataset/2.2.1_API_developer.parquet")
+df_developer = pd.read_parquet("./0 Dataset/2.2.1_API_developer.parquet")
 #2 userdata
-users_stats = pd.read_parquet(" ")
+df_users_data = pd.read_parquet("./0 Dataset/2.2.2_API_user_data.parquet")
+#3
 
+#4
 
-#userdata
-#df_user_reviews = pd.read_parquet("./0 Dataset/1.2_user_review_LISTO.parquet")                    
-#df_steam_games = pd.read_parquet("./0 Dataset/1.1_steam_games_LISTO.parquet")     
+#5
+
+#6
+
+#7
 
 '''
 ________________________________________________________________
 '''
-#UserForGenre
-#df_UserForGenre = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
-# best_developer_year
-#df_best_developer_year = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
-#developer_reviews_analysis
-#funcion5 = pd.read_parquet("./0 Dataset/F_df_funciones.parquet")                    
 
-# ________________________________________________________
+
 def intro():
     '''
     Genera una página de presentación HTML para la API Steam de consultas de videojuegos.    
@@ -81,7 +79,7 @@ def intro():
 
 def developer(desarrollador: str):
     # Filtramos el DataFrame por el desarrollador
-    result = df_API_developer2[df_API_developer2['Desarrollador'] == desarrollador]
+    result = df_developer[df_developer['Desarrollador'] == desarrollador]
 
     # Seleccionamos solo las columnas necesarias
     result = result[['Año', 'Cantidad de Items', 'Contenido Free']]
@@ -92,12 +90,18 @@ def developer(desarrollador: str):
 
 def userdata(user_id: str):
     # Filtramos el DataFrame por el user_id
-    result = user_stats[user_stats['user_id'] == user_id]
-
-    # Si hay resultados, devolvemos el primer diccionario
+    result = df_users_data[df_users_data['user_id'] == user_id]
+    
+    # Si hay resultados, devolvemos el diccionario con el formato requerido
     if not result.empty:
-        return result.to_dict(orient='records')[0]
-    # Si no hay resultados, devolvemos un diccionario vacío
+        user_data = result.to_dict(orient='records')[0]
+        return {
+            "Usuario": user_data['user_id'],
+            "Dinero gastado": f"{user_data['total_spent']} USD",
+            "% de recomendación": f"{user_data['recommendation_percentage']}%",
+            "cantidad de items": user_data['cantidad_items']
+        }
+    # Si no hay resultados, devolvemos un mensaje de error
     else:
-        return {}
+        return {"error": f"No se encontraron datos para el usuario {user_id}"}
     
