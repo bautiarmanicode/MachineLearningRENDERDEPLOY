@@ -34,7 +34,7 @@ def developer(desarrollador: str):
     return result
 
 
-@app.get("/userdata/{user_id}",,response_model=List,  
+@app.get("/userdata/{user_id}",response_model=List,  
             description="""
     <font color="blue">
         INSTRUCCIONES<br>
@@ -50,8 +50,8 @@ def userdata(user_id: str):
     result = fa.userdata(user_id)
     return result
 
-    
-    
+
+
 
 '''
 
