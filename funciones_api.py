@@ -9,11 +9,11 @@ import gc
 ________________________________________________________________
 Asignamos el parquet a distintos df con los que vamos a trabajar
 '''
-#developer viejo
-#df_API_developer = pd.read_parquet("./0 Dataset/2.2_df_API_developer.parquet")
-
-#1 developer nuevo
+#1 developer
 df_API_developer2 = pd.read_parquet("./0 Dataset/2.2.1_API_developer.parquet")
+#2 userdata
+users_stats = pd.read_parquet(" ")
+
 
 #userdata
 #df_user_reviews = pd.read_parquet("./0 Dataset/1.2_user_review_LISTO.parquet")                    
@@ -90,67 +90,14 @@ def developer(desarrollador: str):
     return result.to_dict(orient='records')
 # ________________________________________________________
 
-'''
-def developer(desarrollador: str):
-    df_dev = df_API_developer[df_API_developer['developer'] == desarrollador]
-
-    grouped = df_dev.groupby('release_year').agg(
-        items=('user_id', 'count'),  # Cambiar de (x == 0).sum() a 'count' o 'sum'
-        gratis=('price', lambda x: (x == 0).sum())
-    )
-
-    result = []
-    for year, row in grouped.iterrows():
-        juegos = int(row["items"])
-        gratis_percent = round(row["gratis"] / juegos * 100, 2) if juegos > 0 else 0
-        result.append({
-            "Año": int(year),
-            "Juegos": juegos,
-            "Gratis %": gratis_percent
-        })
-    
-    # Llamamos al recolector de basura
-    gc.collect()
-
-    return result
-
-
-
-# ________________________________________________________
-# 
 def userdata(user_id: str):
-    # Filtrar las revisiones del usuario
-    user_reviews = df_user_reviews[df_user_reviews['user_id'] == user_id]
+    # Filtramos el DataFrame por el user_id
+    result = user_stats[user_stats['user_id'] == user_id]
 
-    # Calcular el dinero gastado por el usuario
-    spent_money = 0
-    for item_id in user_reviews['reviews_item_id']:
-        price = df_steam_games[df_steam_games['user_id'] == item_id]['price'].values
-        if len(price) > 0:  # Verificar si se encontró el precio del ítem
-            spent_money += price[0]
-
-    # Calcular el porcentaje de recomendación
-    total_reviews = len(user_reviews)
-    num_recommendations = (df_user_reviews['sentiment_analysis'] == True).sum()
-    recommendation_percentage = (num_recommendations / total_reviews) * 100 if total_reviews > 0 else 0
-
-    # Crear el diccionario de salida
-    result = {
-        'Usuario': user_id,
-        'Dinero gastado': f"{spent_money} USD",
-        '% de recomendación': f"{recommendation_percentage}%",
-        'cantidad de items': total_reviews
-    }
-
-    # Devolver el diccionario como parte de una lista
-    return [result]
-
-
-
-'''
-
-
-
-
-
-
+    # Si hay resultados, devolvemos el primer diccionario
+    if not result.empty:
+        return result.to_dict(orient='records')[0]
+    # Si no hay resultados, devolvemos un diccionario vacío
+    else:
+        return {}
+    
