@@ -80,9 +80,14 @@ def intro():
     '''
 
 def developer(desarrollador: str):
+    # Filtramos el DataFrame por el desarrollador
     result = df_API_developer2[df_API_developer2['Desarrollador'] == desarrollador]
-    return result.to_dict(orient='records')
 
+    # Seleccionamos solo las columnas necesarias
+    result = result[['Año', 'Cantidad de Items', 'Contenido Free']]
+
+    # Convertimos el resultado a una lista de diccionarios
+    return result.to_dict(orient='records')
 # ________________________________________________________
 
 '''
@@ -109,7 +114,7 @@ def developer(desarrollador: str):
 
     return result
 
-'''
+
 
 # ________________________________________________________
 # 
@@ -142,7 +147,7 @@ def userdata(user_id: str):
 
 
 
-
+'''
 
 
 
