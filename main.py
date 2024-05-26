@@ -34,11 +34,12 @@ def developer(desarrollador: str):
 @app.get("/userdata/{user_id}", response_model=List,  
             description="""
     <font color="blue">
-        INSTRUCCIONES<br>
+        ¡Bienvenido a la consulta de datos de usuario!<br>
+        Siga estos pasos para obtener la información deseada:<br>
         1. Haga clic en "Try it out".<br>
-        2. Ingrese el user_id en el cuadro de abajo.<br>
-        3. Desplácese hacia "Resposes" para ver `cantidad` de dinero gastado por el usuario, el `porcentaje` de recomendación en base a reviews.recommend y `cantidad de juegos.<br>
-        4_ Ejemplos de desarrolladores para consultar: evcentric, 76561198099295859
+        2. Ingrese el ID de usuario en el cuadro de abajo.<br>
+        3. Desplácese hacia "Responses" para ver la cantidad de dinero gastado por el usuario, el porcentaje de recomendación basado en las reviews y la cantidad de juegos.<br>
+        4. Ejemplos de ID de usuario para consultar: evcentric, 76561198099295859
     </font>
 """, 
 tags=["Consultas Generales"])
@@ -53,12 +54,28 @@ def userdata(user_id: str):
 
 # __________________________
 # Definir punto final para la ruta '/recomendacion_juego/{user_id}'
-@app.get('/recomendacion_juego/{user_id}')
+# __________________________
+# Definir punto final para la ruta '/recomendacion_juego/{user_id}'
+@app.get('/recomendacion_juego/{user_id}', 
+         description="""
+    <font color="blue">
+        ¡Bienvenido a la sección de recomendaciones de juegos!<br>
+        Siga estos pasos para obtener las recomendaciones personalizadas:<br>
+        1. Haga clic en "Try it out".<br>
+        2. Ingrese el ID de usuario en el cuadro de abajo.<br>
+        3. Desplácese hacia "Responses" para ver las 5 recomendaciones de juegos más adecuadas para el usuario.<br>
+        4. ¡Disfruta explorando nuevos juegos!<br>
+        Ejemplos de ID de usuario para probar: us213ndjss09sdf, evcentric, 76561198099295859
+    </font>
+""")
 def obtener_recomendaciones_usuario(user_id: str):
+    """
+    Devuelve una lista con 5 recomendaciones de juegos para el usuario ingresado.
+    Ejemplo de retorno: {'Recomendaciones para el usuario 76561197970982479': ['1. RWBY: Grimm Eclipse', '2. Rogue Legacy', '3. Dust: An Elysian Tail', "4. King Arthur's Gold", '5. RIFT']}
+    """
     # Llamar a la función recomendacion_juego del módulo funciones_api
     recomendaciones = fa.recomendacion_juego(user_id)
     return recomendaciones
-
 
 
 '''
