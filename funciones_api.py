@@ -10,21 +10,13 @@ import pickle
 ________________________________________________________________
 Asignamos el parquet a distintos df con los que vamos a trabajar
 '''
-#1 developer
+#Carga de dataset
 df_developer = pd.read_parquet("./0 Dataset/2.2.1_API_developer.parquet")
-#2 userdata
-df_users_data = pd.read_parquet("./0 Dataset/2.2.2_API_user_data.parquet")
-#3 ML ITEM X ITEM
 df_rev_games = pd.read_parquet("./0 Dataset/4_API_ML_ITEM.parquet")
 df_steam_games = pd.read_parquet("./0 Dataset/1.1_steam_games_LISTO.parquet")
-df_users_reviews = pd.read_parquet("./0 Dataset/1.3_user_review_sentiment.parquet")
-#4
+df_user_reviews = pd.read_parquet("./0 Dataset/1.3_user_review_sentiment.parquet")
 
-#5
 
-#6
-
-#7
 
 '''
 ________________________________________________________________
@@ -92,21 +84,46 @@ def developer(desarrollador: str):
 # ________________________________________________________
 
 def userdata(user_id: str):
-    # Filtramos el DataFrame por el user_id
-    result = df_users_data[df_users_data['user_id'] == user_id]
-    
-    # Si hay resultados, devolvemos el diccionario con el formato requerido
-    if not result.empty:
-        user_data = result.to_dict(orient='records')[0]  # Acceder al primer elemento de la lista
-        return [{
-            "Usuario": user_data['user_id'],  # Acceder a la clave 'user_id' del diccionario
-            "Dinero gastado": f"{user_data['total_spent']} USD",
-            "% de recomendación": f"{user_data['recommendation_percentage']}%",
-            "cantidad de items": user_data['cantidad_items']
-        }]
-    # Si no hay resultados, devolvemos un mensaje de error
+    """
+    Devuelve la cantidad de dinero gastado por el usuario ingresado, el porcentaje de recomendación sobre las reviews realizadas y la cantidad de items.
+    Ejemplo de retorno: {"Usuario X": us213ndjss09sdf, "Dinero gastado": 200 USD, "% de recomendación": 20%, "cantidad de items": 5}
+    """
+    # Si el user_id no se encuentra en los dataframes:
+    if user_id not in df_user_reviews['user_id'].values:
+        return f"ERROR: El user_id {user_id} no existe en la base de datos."  # se imprime mensaje de error
     else:
-        return [{"error": f"No se encontraron datos para el usuario {user_id}"}]
+        # Se filtran los datos en función al usuario especificado
+        df_filtrado = df_user_reviews[df_user_reviews['user_id'] == user_id]
+        
+        # Se unen las columnas necesarias de los dataframes:
+        df_merged = pd.merge(df_filtrado[['user_id', 'reviews_item_id', 'reviews_recommend']], 
+                              df_steam_games[['id', 'price']], 
+                              left_on='reviews_item_id', right_on='id', how='inner')
+        
+        # Se calcula la cantidad de dinero gastado por el usuario
+        dinero_gastado = round(df_merged['price'].sum(), 2)
+        
+        # Se calcula la cantidad de recomendaciones del usuario
+        recomendaciones = df_merged['reviews_recommend'].sum()
+        
+        # Se calcula el total de reviews del usuario
+        total_reviews = df_merged.shape[0]
+        
+        # Se calcula el porcentaje de recomendaciones sobre el total de reviews
+        porcentaje_recomendacion = round(recomendaciones / total_reviews * 100, 0)
+        
+        # Se calcula la cantidad de items por usuario
+        cantidad_de_items = df_merged['reviews_item_id'].nunique()
+        
+        # Crear un diccionario con los resultados
+        dicc_rdos = {
+            "Usuario": user_id,
+            "Dinero gastado": f'{dinero_gastado} USD',
+            "% de recomendación": f'{porcentaje_recomendacion}%',
+            'Cantidad de items': cantidad_de_items
+        }
+        return dicc_rdos
+
 
 # ____________________________________________________________________________________
 def recomendacion_juego(user_id):
@@ -120,7 +137,7 @@ def recomendacion_juego(user_id):
       '5. RIFT']} 
     '''
     # Verificar si el user_id se encuentra en los dataframes
-    if user_id not in df_users_reviews['user_id'].values:
+    if user_id not in df_user_reviews['user_id'].values:
         return f"ERROR: El user_id {user_id} no existe en la base de datos."
     
     # En primer lugar, sacar los juegos que el usuario ya ha jugado:
