@@ -146,7 +146,7 @@ def recomendacion_juego(user_id: str):
         df_user = df_steam_games[["id", "app_name"]].drop(games_played.id, errors='ignore')
 
         # Especifica la ruta completa al archivo RS_model.pkl
-        ruta_modelo = '../0 Dataset/RS_model.pkl'
+        ruta_modelo = './0 Dataset/RS_model.pkl'
 
         # Cargar el modelo de Sistema de Recomendación entrenado desde el archivo especificado
         with open(ruta_modelo, 'rb') as file:
