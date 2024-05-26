@@ -78,9 +78,14 @@ def developer(desarrollador: str):
 
     # Seleccionamos solo las columnas necesarias
     result = result[['Año', 'Cantidad de Items', 'Contenido Free']]
-
     # Convertimos el resultado a una lista de diccionarios
-    return result.to_dict(orient='records')
+    resultado_final = result.to_dict(orient='records')
+    
+    # Liberamos la memoria utilizada por el DataFrame intermedio
+    del result
+    gc.collect()
+    # Convertimos el resultado a una lista de diccionarios
+    return resultado_final
 # ________________________________________________________
 
 def userdata(user_id: str):
@@ -122,6 +127,10 @@ def userdata(user_id: str):
             "% de recomendación": f'{porcentaje_recomendacion}%',
             'Cantidad de items': cantidad_de_items
         }
+        # Liberamos la memoria utilizada por el DataFrame intermedio
+        del df_filtrado, df_merged
+        gc.collect()
+        
         return dicc_rdos
 
 
@@ -163,7 +172,10 @@ def recomendacion_juego(user_id: str):
 
         # Se da formato a las 5 sugerencias:
         sugerencias_formateadas = [f'{i+1}. {sugerencia}' for i, sugerencia in enumerate(sugerencias)]
-
+        # Se libera la memoria utilizada por los dataframes intermedios
+        del df_rev_games, juegos_jugados, df_user
+        gc.collect()
+        
         # Se devuelven los resultados en un diccionario
         return {llave_dic: sugerencias_formateadas}
 
