@@ -128,44 +128,45 @@ def userdata(user_id: str):
 # ____________________________________________________________________________________
 def recomendacion_juego(user_id: str):
     '''
-    Devuelve una lista con 5 recomendaciones de juegos para el usuario ingresado.
-    Ejemplo de retorno: {'Recomendaciones para el usuario 76561197970982479': ['1. RWBY: Grimm Eclipse', '2. Rogue Legacy', '3. Dust: An Elysian Tail', "4. King Arthur's Gold", '5. RIFT']}
+    Devuelve una lista con 5 sugerencias de juegos para el usuario seleccionado.
+    Ejemplo de retorno: {'Sugerencias para el usuario 76561197970982479': ['1. RWBY: Grimm Eclipse', '2. Rogue Legacy', '3. Dust: An Elysian Tail', "4. King Arthur's Gold", '5. RIFT']}
     '''
-    # Si el user_id no se encuentra en los dataframes:
+    # Si el ID de usuario no se encuentra en los dataframes:
     if user_id not in df_user_reviews['user_id'].values:
-        return f"ERROR: El user_id {user_id} no existe en la base de datos."  # se imprime mensaje de error
+        return f"ERROR: El ID de usuario {user_id} no existe en la base de datos."  # se imprime un mensaje de error
     else:
-        # Se asigna el id ingresado a la variable user
+        # Se asigna el ID ingresado a la variable user
         user = user_id
 
-        # En primer lugar, sacamos los juegos que el usuario ya ha jugado:
+        # En primer lugar, se extraen los juegos que el usuario ya ha jugado:
         df_rev_games = pd.merge(df_user_reviews, df_steam_games, left_on="reviews_item_id", right_on="id", how="inner")
-        games_played = df_rev_games[df_rev_games['user_id'] == user]
+        juegos_jugados = df_rev_games[df_rev_games['user_id'] == user]
 
-        # Se eliminan del df de juegos los jugados por el usuario
-        df_user = df_steam_games[["id", "app_name"]].drop(games_played.id, errors='ignore')
+        # Se eliminan del dataframe de juegos los jugados por el usuario
+        df_user = df_steam_games[["id", "app_name"]].drop(juegos_jugados.id, errors='ignore')
 
-        # Especifica la ruta completa al archivo RS_model.pkl
-        ruta_modelo = './0 Dataset/RS_model.pkl'
+        # Ruta completa al archivo RS_model.pkl
+        ruta_modelo = '../0 Dataset/RS_model.pkl'
 
-        # Cargar el modelo de Sistema de Recomendación entrenado desde el archivo especificado
+        # Se carga el modelo de Sistema de Recomendación entrenado desde el archivo especificado
         with open(ruta_modelo, 'rb') as file:
             RS_model = pickle.load(file)
 
-        # Realizamos las predicciones y las agregamos en una nueva columna:
+        # Se realizan las predicciones y se agregan en una nueva columna:
         df_user['estimate_Score'] = df_user['id'].apply(lambda x: RS_model.predict(user, x).est)
 
-        # Ordenamos el df de manera descendente en función al score y seleccionamos los 5 principales:
-        recommendations = df_user.sort_values('estimate_Score', ascending=False)["app_name"].head(5).to_list()
+        # Se ordena el dataframe de manera descendente en función al score y se seleccionan los 5 principales:
+        sugerencias = df_user.sort_values('estimate_Score', ascending=False)["app_name"].head(5).to_list()
 
         # Se crea la llave del diccionario de retorno
-        llave_dic = f'Recomendaciones para el usuario {user}'
+        llave_dic = f'Sugerencias para el usuario {user}'
 
-        # Se da formato al top 5 de recomendaciones:
-        recomm_output = [f'{i+1}. {recomendacion}' for i, recomendacion in enumerate(recommendations)]
+        # Se da formato a las 5 sugerencias:
+        sugerencias_formateadas = [f'{i+1}. {sugerencia}' for i, sugerencia in enumerate(sugerencias)]
 
         # Se devuelven los resultados en un diccionario
-        return {llave_dic: recomm_output}
+        return {llave_dic: sugerencias_formateadas}
+
 
 
 
