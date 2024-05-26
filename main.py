@@ -3,7 +3,6 @@ from fastapi.responses import HTMLResponse
 import funciones_api as fa
 from typing import List
 
-
 import importlib
 importlib.reload(fa)
 #importlib.reload(ML)

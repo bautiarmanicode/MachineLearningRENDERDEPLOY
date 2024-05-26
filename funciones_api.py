@@ -80,7 +80,7 @@ def developer(desarrollador: str):
     result = result[['Año', 'Cantidad de Items', 'Contenido Free']]
     # Convertimos el resultado a una lista de diccionarios
     resultado_final = result.to_dict(orient='records')
-    
+     
     # Liberamos la memoria utilizada por el DataFrame intermedio
     del result
     gc.collect()
