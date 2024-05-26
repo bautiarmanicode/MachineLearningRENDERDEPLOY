@@ -3,9 +3,6 @@ from fastapi.responses import HTMLResponse
 import funciones_api as fa
 from typing import List
 
-# import ML_itemxitem as ML
-
-
 
 import importlib
 importlib.reload(fa)
@@ -50,6 +47,13 @@ def userdata(user_id: str):
     result = fa.userdata(user_id)
     return result
 
+# __________________________
+# Definir punto final para la ruta '/user_recommendations/{user_id}'
+@app.get('/user_recommendations/{user_id}')
+def obtener_recomendaciones_usuario(user_id: str):
+    # Llamar a la función user_recommendations del módulo funciones_api
+    recomendaciones = fa.user_recommendations(user_id)
+    return recomendaciones
 
 
 
