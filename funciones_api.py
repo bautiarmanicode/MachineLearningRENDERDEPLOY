@@ -105,3 +105,18 @@ def userdata(user_id: str):
     else:
         return {"error": f"No se encontraron datos para el usuario {user_id}"}
     
+# ____________________________________________________________________________________
+
+# def recomendacion_juego(id_producto):
+    # Lógica para recomendar juegos similares al juego con id_producto
+    # Devolver una lista con 5 juegos recomendados
+    
+    
+# def recomendacion_usuario(id_usuario):
+    # Lógica para recomendar juegos a un usuario específico
+    # Devolver una lista con 5 juegos recomendados para el usuario id_usuario
+
+
+
+
+
