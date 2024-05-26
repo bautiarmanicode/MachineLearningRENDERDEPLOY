@@ -31,7 +31,7 @@ def developer(desarrollador: str):
     return result
 
 
-@app.get("/userdata/{user_id}",response_model=List,  
+@app.get("/userdata/{user_id}", response_model=List,  
             description="""
     <font color="blue">
         INSTRUCCIONES<br>
@@ -43,9 +43,13 @@ def developer(desarrollador: str):
 """, 
 tags=["Consultas Generales"])
 def userdata(user_id: str):
+    """
+    Devuelve la cantidad de dinero gastado por el usuario ingresado, el porcentaje de recomendación sobre las reviews realizadas y la cantidad de items.
+    Ejemplo de retorno: [{"Usuario": "X", "Dinero gastado": "200 USD", "% de recomendación": "20%", "Cantidad de items": 5}]
+    """
     # Filtramos el DataFrame user_stats por el user_id
     result = fa.userdata(user_id)
-    return result
+    return [result]  # Devuelve el diccionario dentro de una lista
 
 # __________________________
 # Definir punto final para la ruta '/recomendacion_juego/{user_id}'
