@@ -74,11 +74,5 @@ def best_developer_year(año: int):
     # Código para procesar la consulta y devolver el resultado
     pass
 
+'''
 
-
-# Función para el endpoint developer_reviews_analysis
-@app.get("/developer_reviews_analysis/{desarrolladora}")
-def developer_reviews_analysis(desarrolladora: str):
-    # Código para procesar la consulta y devolver el resultado
-    pass
-    '''

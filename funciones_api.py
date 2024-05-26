@@ -98,15 +98,15 @@ def userdata(user_id: str):
     # Si hay resultados, devolvemos el diccionario con el formato requerido
     if not result.empty:
         user_data = result.to_dict(orient='records')[0]  # Acceder al primer elemento de la lista
-        return {
+        return [{
             "Usuario": user_data['user_id'],  # Acceder a la clave 'user_id' del diccionario
             "Dinero gastado": f"{user_data['total_spent']} USD",
             "% de recomendación": f"{user_data['recommendation_percentage']}%",
             "cantidad de items": user_data['cantidad_items']
-        }
+        }]
     # Si no hay resultados, devolvemos un mensaje de error
     else:
-        return {"error": f"No se encontraron datos para el usuario {user_id}"}
+        return [{"error": f"No se encontraron datos para el usuario {user_id}"}]
 
 # ____________________________________________________________________________________
 def recomendacion_juego(user_id):
