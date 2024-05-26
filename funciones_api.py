@@ -97,9 +97,9 @@ def userdata(user_id: str):
     
     # Si hay resultados, devolvemos el diccionario con el formato requerido
     if not result.empty:
-        user_data = result.to_dict(orient='records')  # Eliminamos [0]
+        user_data = result.to_dict(orient='records')[0]  # Acceder al primer elemento de la lista
         return {
-            "Usuario": user_data['user_id'],  # Esta línea también debe cambiar
+            "Usuario": user_data['user_id'],  # Acceder a la clave 'user_id' del diccionario
             "Dinero gastado": f"{user_data['total_spent']} USD",
             "% de recomendación": f"{user_data['recommendation_percentage']}%",
             "cantidad de items": user_data['cantidad_items']
@@ -109,7 +109,7 @@ def userdata(user_id: str):
         return {"error": f"No se encontraron datos para el usuario {user_id}"}
 
 # ____________________________________________________________________________________
-def user_recommendations(user_id):
+def recomendacion_juego(user_id):
     '''
     Devuelve una lista con 5 recomendaciones de juegos para el usuario ingresado.
   
@@ -149,6 +149,9 @@ def user_recommendations(user_id):
 
     # Devolver los resultados en un diccionario
     return {llave_dic: recomm_output}
+
+
+
 
 # def recomendacion_juego(id_producto):
     # Lógica para recomendar juegos similares al juego con id_producto

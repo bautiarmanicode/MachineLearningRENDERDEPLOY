@@ -48,11 +48,11 @@ def userdata(user_id: str):
     return result
 
 # __________________________
-# Definir punto final para la ruta '/user_recommendations/{user_id}'
-@app.get('/user_recommendations/{user_id}')
+# Definir punto final para la ruta '/recomendacion_juego/{user_id}'
+@app.get('/recomendacion_juego/{user_id}')
 def obtener_recomendaciones_usuario(user_id: str):
-    # Llamar a la función user_recommendations del módulo funciones_api
-    recomendaciones = fa.user_recommendations(user_id)
+    # Llamar a la función recomendacion_juego del módulo funciones_api
+    recomendaciones = fa.recomendacion_juego(user_id)
     return recomendaciones
 
 
